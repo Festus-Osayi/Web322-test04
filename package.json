@@ -13,15 +13,16 @@
   "name": "zcc-users",
   "version": "1.0.0",
   "main": "server.js",
-  "author": "Matin Maleki",
+  "author": "Festus Osayi",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matmaleki/web322-users.git"
+    "url": "https://github.com/Festus-Osayi/Web322-test04.git"
   },
   "bugs": {
-    "url": "https://github.com/matmaleki/web322-users/issues"
+    "url": "https://github.com/Festus-Osayi/Web322-test04/issues"
   },
-  "homepage": "https://github.com/matmaleki/web322-users#readme",
+  "homepage": "https://github.com/Festus-Osayi/Web322-test04#readme",
+  "devDependencies": {},
   "description": ""
 }
