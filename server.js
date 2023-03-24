@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pg = require('pg');
 const app = express();
-const exphbs  = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const Sequelize = require("sequelize")
 
 
@@ -20,10 +20,10 @@ var sequelize = new Sequelize('oowbogjv', 'oowbogjv', '3a9fGnJ8HkINuHiPcfS6lLHtB
 
 sequelize
     .authenticate()
-    .then(function() {
+    .then(function () {
         console.log('Connection has been established successfully.');
     })
-    .catch(function(err) {
+    .catch(function (err) {
         console.log('Unable to connect to the database:', err);
     });
 
@@ -37,7 +37,7 @@ var users = sequelize.define('users', {
     name: Sequelize.STRING,
     email: Sequelize.STRING,
     created_at: Sequelize.DATE
-},{
+}, {
     createdAt: false, // disable createdAt
     updatedAt: false // disable updatedAt
 });
@@ -53,7 +53,7 @@ const hbs = exphbs.create({
             return date.toLocaleDateString();
         }
     },
-    extname:".hbs"
+    extname: ".hbs"
 });
 
 // Register handlebars as the rendering engine for views
@@ -68,17 +68,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/update-user', (req, res) => {
 
     const id = req.query.id;
-    const{name, email} = req.body
+    const { name, email } = req.body
 
     users.findAll({
-        where: {id : id}
-    }).then(function(data){
-        res.render('edit', {users: data[0], layout: false})
-    }).catch(err =>{
+        where: { id: id }
+    }).then(function (data) {
+        res.render('edit', { users: data[0], layout: false })
+    }).catch(err => {
         console.log(err);
     })
-    
-    
+
+
 });
 
 // Update user data in database
@@ -105,16 +105,16 @@ app.post('/update-user', (req, res) => {
     users.update({
         name: name,
         email: email,
-        
-        where:{id: id}
-    }).then(function(){
+
+        where: { id: id }
+    }).then(function () {
         console.log(`users updated with ${id} updated`)
-    }).catch(err=>{
+    }).catch(err => {
         console.log('err')
     })
     res.redirect('/')
 
-  });
+});
 
 // Delete user data in database
 app.get('/delete-user', (req, res) => {
@@ -133,21 +133,21 @@ app.get('/delete-user', (req, res) => {
     Redirect to root of the website.
     ----------------------------------------*/
 
-    
+
     const id = req.query.id;
 
     // Update data into PostgreSQL
-    
-   
 
-        users.destroy({
-            where:{id: id}
-        }).then(function(){
-            console.log(`deleted successfully`)
-        }).catch(err=>{
-            console.log(err)
-        })
-        res.redirect('/')
+
+
+    users.destroy({
+        where: { id: id }
+    }).then(function () {
+        console.log(`deleted successfully`)
+    }).catch(err => {
+        console.log(err)
+    })
+    res.redirect('/')
 
 
 });
@@ -156,18 +156,18 @@ app.get('/delete-user', (req, res) => {
 app.post('/insert-user', (req, res) => {
     const { name, email } = req.body;
     // Insert data into PostgreSQL
-    
-        users.create({
-            name: name,
-            email: email,
-            
-        }).then(function(){
-            console.log(`successfully`)
-            res.redirect('/')
-        }).catch(err=>{
-            console.log('err')
-        })
-       
+
+    users.create({
+        name: name,
+        email: email,
+
+    }).then(function () {
+        console.log(`successfully`)
+        res.redirect('/')
+    }).catch(err => {
+        console.log('err')
+    })
+
 
 })
 app.get('/', (req, res) => {
@@ -176,14 +176,14 @@ app.get('/', (req, res) => {
         order: ["id"]
     }).then((data) => {
         // render the "viewTable" view with the data
-        res.render('index', { users: data, layout:false });
+        res.render('index', { users: data, layout: false });
     });
 });
 
 
 // Start the server
-sequelize.sync().then(function(){
+sequelize.sync().then(function () {
     app.listen(5000, () => {
-    console.log('Server started on http://localhost:5000');
-});
+        console.log('Server started on http://localhost:5000');
+    });
 })
